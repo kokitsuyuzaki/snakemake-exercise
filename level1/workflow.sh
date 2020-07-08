@@ -5,7 +5,8 @@ mkdir -p data
 mkdir -p output
 mkdir -p output/{fastqc,multiqc}
 mkdir -p logs
-export PATH=$PATH:/home/koki/Software/sratoolkit.2.10.8-centos_linux64/bin:/home/koki/Software/fastqc/FastQC:/home/koki/.local/bin
+export PATH=$PATH:/home/koki/Software/sratoolkit.2.10.8-centos_linux64/bin:/home/koki/Software/fastqc/FastQC:/home/koki/miniconda3/bin
+
 srr=(`echo SRR{8452726..8453394}`)
 
 for ((i = 0; i < ${#srr[@]}; i++)) {

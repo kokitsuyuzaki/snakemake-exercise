@@ -34,4 +34,4 @@ rule multiqc:
 	log:
 		'logs/multiqc_SRR8452726.log'
 	shell:
-		'/home/koki/.local/bin/multiqc output/fastqc --outdir output/multiqc >& {log}'
+		'/home/koki/miniconda3/bin/multiqc output/fastqc --outdir output/multiqc >& {log}'

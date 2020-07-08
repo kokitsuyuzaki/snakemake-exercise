@@ -10,4 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-/home/koki/.local/bin/multiqc output/fastqc --outdir output/multiqc
+/home/koki/miniconda3/bin/multiqc output/fastqc --outdir output/multiqc
