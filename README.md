@@ -28,15 +28,14 @@ cd level3
 snakamake --cores 1
 ```
 
-## Level4: Multiple samples × multiple rules (OpenGridEngine/Slurm)
+## Level4: OpenGridEngine/Slurm
 
 ```bash
 cd level4
-snakemake -j 32 --cluster qsub --latency-wait 600 # OpenGridEngine
-snakemake -j 32 --cluster sbatch --latency-wait 600 # Slurm
+snakamake --cores 1
 ```
 
-## Level5: Wildcards
+## Level5: Multiple samples × multiple rules (Wildcards)
 
 ```bash
 cd level5
