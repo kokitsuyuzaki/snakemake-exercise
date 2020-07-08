@@ -1,0 +1,13 @@
+rule all:
+	input:
+		'data/SRR8452726.fastq'
+
+rule fastq_dump:
+	output:
+		'data/SRR8452726.fastq'
+	benchmark:
+		'benchmarks/fastq_dump_SRR8452726.txt'
+	log:
+		'logs/fastq_dump_SRR8452726.log'
+	shell:
+		'/home/koki/Software/sratoolkit.2.10.8-centos_linux64/bin/fastq-dump SRR8452726 --outdir data >& {log}'

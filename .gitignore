@@ -1,0 +1,10 @@
+**/.snakemake
+**/.cache
+**/.java
+**/data
+**/output
+**/logs
+**/benchmarks
+
+.DS_Store
+**/.DS_Store

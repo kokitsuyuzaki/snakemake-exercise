@@ -1,0 +1,59 @@
+SAMPLEs = ['SRR' + str(item+8452726) for item in list(range(669))]
+
+rule all:
+	input:
+		'output/multiqc/multiqc_report.html'
+
+rule fasterq_dump:
+	output:
+		'data/{accession}.fastq'
+	resources:
+		mem_gb=100
+	threads: 6
+	params:
+		extra=''
+	wildcard_constraints:
+		accession='|'.join([re.escape(x) for x in SAMPLEs])
+	benchmark:
+		'benchmarks/fastq_dump_{accession}.txt'
+	log:
+		'logs/fastq_dump_{accession}.log'
+	wrapper:
+		'0.63.0/bio/sra-tools/fasterq-dump'
+
+rule fastqc:
+	input:
+		'data/{sample}.fastq'
+	output:
+		html='output/fastqc/{sample}_fastqc.html',
+		zip='output/fastqc/{sample}_fastqc.zip'
+	resources:
+		mem_gb=100
+	threads: 1
+	params:
+		''
+	wildcard_constraints:
+		sample='|'.join([re.escape(x) for x in SAMPLEs])
+	benchmark:
+		'benchmarks/fastqc_{sample}.txt'
+	log:
+		'logs/fastqc_{sample}.log'
+	wrapper:
+		'0.63.0/bio/fastqc'
+
+rule multiqc:
+	input:
+		expand('output/fastqc/{sample}_fastqc.{ext}',
+			sample=SAMPLEs, ext=['html', 'zip'])
+	output:
+		'output/multiqc/multiqc_report.html'
+	resources:
+		mem_gb=100
+	params:
+		''
+	benchmark:
+		'benchmarks/multiqc.txt'
+	log:
+		'logs/multiqc.log'
+	wrapper:
+		'0.63.0/bio/multiqc'

@@ -1,0 +1,57 @@
+SAMPLEs = ['SRR' + str(item+8452726) for item in list(range(669))]
+
+rule all:
+	input:
+		'output/multiqc/multiqc_report.html'
+
+rule fastq_dump:
+	output:
+		'data/{sample}.fastq'
+	resources:
+		mem_gb=100
+	container:
+		'docker://pegi3s/sratoolkit:latest'
+	wildcard_constraints:
+		sample='|'.join([re.escape(x) for x in SAMPLEs])
+	benchmark:
+		'benchmarks/fastq_dump_{sample}.txt'
+	log:
+		'logs/fastq_dump_{sample}.log'
+	shell:
+		'src/fastq_dump.sh {output} >& {log}'
+
+rule fastqc:
+	input:
+		'data/{sample}.fastq'
+	output:
+		html='output/fastqc/{sample}_fastqc.html',
+		zip='output/fastqc/{sample}_fastqc.zip'
+	resources:
+		mem_gb=100
+	container:
+		'docker://singlecellpipeline/fastqc:v0.0.2'
+	wildcard_constraints:
+		sample='|'.join([re.escape(x) for x in SAMPLEs])
+	benchmark:
+		'benchmarks/fastqc_{sample}.txt'
+	log:
+		'logs/fastqc_{sample}.log'
+	shell:
+		'src/fastqc.sh {input} >& {log}'
+
+rule multiqc:
+	input:
+		expand('output/fastqc/{sample}_fastqc.{ext}',
+			sample=SAMPLEs, ext=['html', 'zip'])
+	resources:
+		mem_gb=100
+	container:
+		'docker://ewels/multiqc:latest'
+	output:
+		'output/multiqc/multiqc_report.html'
+	benchmark:
+		'benchmarks/multiqc.txt'
+	log:
+		'logs/multiqc.log'
+	shell:
+		'src/multiqc.sh >& {log}'

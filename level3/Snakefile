@@ -1,0 +1,37 @@
+rule all:
+	input:
+		'output/multiqc/multiqc_report.html'
+
+rule fastq_dump:
+	output:
+		'data/SRR8452726.fastq'
+	benchmark:
+		'benchmarks/fastq_dump_SRR8452726.txt'
+	log:
+		'logs/fastq_dump_SRR8452726.log'
+	shell:
+		'/home/koki/Software/sratoolkit.2.10.8-centos_linux64/bin/fastq-dump SRR8452726 --outdir data >& {log}'
+
+rule fastqc:
+	input:
+		'data/SRR8452726.fastq'
+	output:
+		'output/fastqc/SRR8452726_fastqc.html'
+	benchmark:
+		'benchmarks/fastqc_SRR8452726.txt'
+	log:
+		'logs/fastqc_SRR8452726.log'
+	shell:
+		'/home/koki/Software/fastqc/FastQC/fastqc data/SRR8452726.fastq -o output/fastqc >& {log}'
+
+rule multiqc:
+	input:
+		'output/fastqc/SRR8452726_fastqc.html'
+	output:
+		'output/multiqc/multiqc_report.html'
+	benchmark:
+		'benchmarks/multiqc_SRR8452726.txt'
+	log:
+		'logs/multiqc_SRR8452726.log'
+	shell:
+		'/home/koki/.local/bin/multiqc output/fastqc --outdir output/multiqc >& {log}'

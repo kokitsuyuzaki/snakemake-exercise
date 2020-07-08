@@ -1,0 +1,44 @@
+SAMPLEs = ['SRR' + str(item+8452726) for item in list(range(669))]
+
+rule all:
+	input:
+		'output/multiqc/multiqc_report.html'
+
+rule fastq_dump:
+	output:
+		'data/{sample}.fastq'
+	wildcard_constraints:
+		sample='|'.join([re.escape(x) for x in SAMPLEs])
+	benchmark:
+		'benchmarks/fastq_dump_{sample}.txt'
+	log:
+		'logs/fastq_dump_{sample}.log'
+	shell:
+		'src/fastq_dump.sh {output} >& {log}'
+
+rule fastqc:
+	input:
+		'data/{sample}.fastq'
+	output:
+		'output/fastqc/{sample}_fastqc.html'
+	wildcard_constraints:
+		sample='|'.join([re.escape(x) for x in SAMPLEs])
+	benchmark:
+		'benchmarks/fastqc_{sample}.txt'
+	log:
+		'logs/fastqc_{sample}.log'
+	shell:
+		'src/fastqc.sh {input} >& {log}'
+
+rule multiqc:
+	input:
+		expand('output/fastqc/{sample}_fastqc.html',
+			sample=SAMPLEs)
+	output:
+		'output/multiqc/multiqc_report.html'
+	benchmark:
+		'benchmarks/multiqc.txt'
+	log:
+		'logs/multiqc.log'
+	shell:
+		'src/multiqc.sh >& {log}'
