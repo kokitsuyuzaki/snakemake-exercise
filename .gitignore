@@ -5,9 +5,16 @@
 **/output
 **/logs
 **/benchmarks
+**/*.out
+**/*.sh.*
 
 .DS_Store
 **/.DS_Store
+
+**/.fuse*
+*/*/.fuse*
+**/.nfs*
+*/*/.nfs*
 
 ._*
 **/._*

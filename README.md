@@ -39,30 +39,30 @@ snakamake --cores 1
 
 ```bash
 cd level5
-snakemake -j 32 --cluster qsub --latency-wait 600 # OpenGridEngine
-snakemake -j 32 --cluster sbatch --latency-wait 600 # Slurm
+snakemake -j 32 --cluster "qsub -S /bin/bash -l nc=4 -p -50 -r yes" --latency-wait 600 # OpenGridEngine
+snakemake -j 32 --cluster "sbatch -n 4 --nice=50 --requeue" --latency-wait 600 # Slurm
 ```
 
 ## Level6: `container` tag
 
 ```bash
 cd level6
-snakemake -j 32 --cluster qsub --latency-wait 600 --use-singularity # OpenGridEngine
-snakemake -j 32 --cluster sbatch --latency-wait 600 --use-singularity # Slurm
+snakemake -j 32 --cluster "qsub -S /bin/bash -l nc=4 -p -50 -r yes" --latency-wait 600 --use-singularity # OpenGridEngine
+snakemake -j 32 --cluster "sbatch -n 4 --nice=50 --requeue" --latency-wait 600 --use-singularity # Slurm
 ```
 
 ## Level7: `conda` tag
 
 ```bash
 cd level7
-snakemake -j 32 --cluster qsub --latency-wait 600 --use-conda # OpenGridEngine
-snakemake -j 32 --cluster sbatch --latency-wait 600 --use-conda # Slurm
+snakemake -j 32 --cluster "qsub -S /bin/bash -l nc=4 -p -50 -r yes" --latency-wait 600 --use-conda # OpenGridEngine
+snakemake -j 32 --cluster "sbatch -n 4 --nice=50 --requeue" --latency-wait 600 --use-conda # Slurm
 ```
 
 ## Level8: Snakemake wrappers
 
 ```bash
 cd level8
-snakemake -j 32 --cluster qsub --latency-wait 600 --use-conda # OpenGridEngine
-snakemake -j 32 --cluster sbatch --latency-wait 600 --use-conda # Slurm
+snakemake -j 32 --cluster "qsub -S /bin/bash -l nc=4 -p -50 -r yes" --latency-wait 600 --use-conda # OpenGridEngine
+snakemake -j 32 --cluster "sbatch -n 4 --nice=50 --requeue" --latency-wait 600 --use-conda # Slurm
 ```

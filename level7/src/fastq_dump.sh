@@ -11,4 +11,4 @@
 SLURM_RESTART_COUNT=2
 
 srr=`echo $1 | sed -e "s|data/||g" | sed -e "s|.fastq||g"`
-fastq-dump $srr --outdir data
+$CONDA_PREFIX/bin/fastq-dump $srr --outdir data

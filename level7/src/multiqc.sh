@@ -10,4 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-multiqc output/fastqc --outdir output/multiqc
+$CONDA_PREFIX/bin/multiqc output/fastqc --outdir output/multiqc

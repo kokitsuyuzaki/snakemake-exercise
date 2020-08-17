@@ -43,12 +43,12 @@ rule multiqc:
 	input:
 		expand('output/fastqc/{sample}_fastqc.{ext}',
 			sample=SAMPLEs, ext=['html', 'zip'])
+	output:
+		'output/multiqc/multiqc_report.html'
 	resources:
 		mem_gb=100
 	conda:
 		'envs/myenv.yaml'
-	output:
-		'output/multiqc/multiqc_report.html'
 	benchmark:
 		'benchmarks/multiqc.txt'
 	log:
