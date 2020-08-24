@@ -10,5 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-multiqc=`ls .snakemake/conda/*/bin/multiqc`
-$multiqc output/fastqc --outdir output/multiqc
+$CONDA_PREFIX/bin/multiqc output/fastqc --outdir output/multiqc

@@ -10,5 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-fastqc=`ls .snakemake/conda/*/bin/fastqc`
-$fastqc $1 -o output/fastqc
+$CONDA_PREFIX/bin/fastqc $1 -o output/fastqc
