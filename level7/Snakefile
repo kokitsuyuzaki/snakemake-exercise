@@ -2,7 +2,9 @@ SAMPLEs = ['SRR' + str(item+8452726) for item in list(range(669))]
 
 rule all:
 	input:
-		'output/multiqc/multiqc_report.html'
+		# 'output/multiqc/multiqc_report.html'
+		expand('output/fastqc/{sample}_fastqc.html',
+			sample=SAMPLEs)
 
 rule fastq_dump:
 	output:
